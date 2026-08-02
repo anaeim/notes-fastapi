@@ -1,3 +1,3 @@
 "# Fastapi-The-Complete-Course"
 
-Course and code created by: Eric Roby
+[link](https://www.udemy.com/course/fastapi-the-complete-course/?couponCode=26BBPAA2MX)
