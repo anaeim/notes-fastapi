@@ -1,2 +1,3 @@
-# notes-fast-api
-notes for udemy course for fast api: FastAPI - The Complete Course
+"# Fastapi-The-Complete-Course"
+
+Course and code created by: Eric Roby
