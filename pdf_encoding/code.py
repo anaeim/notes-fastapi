@@ -60,15 +60,31 @@ Public API
 """
 
 import openpyxl
-from datetime import datetime, date
+from datetime import datetime, date, time
+
+
+def _fmt_time(t: time) -> str:
+    """Format a time object, omitting seconds/microseconds when they are zero."""
+    if t.second == 0 and t.microsecond == 0:
+        return t.strftime("%H:%M")
+    if t.microsecond == 0:
+        return t.strftime("%H:%M:%S")
+    return t.strftime("%H:%M:%S.%f").rstrip("0")
 
 
 def _fmt(value) -> str:
     """Format a cell value to a compact string."""
     if value is None:
         return ""
-    if isinstance(value, (datetime, date)):
+    if isinstance(value, datetime):
+        # Include time only when it carries real information (not midnight)
+        if value.hour == 0 and value.minute == 0 and value.second == 0 and value.microsecond == 0:
+            return value.strftime("%Y-%m-%d")
+        return f"{value.strftime('%Y-%m-%d')} {_fmt_time(value.time())}"
+    if isinstance(value, date):
         return value.strftime("%Y-%m-%d")
+    if isinstance(value, time):
+        return _fmt_time(value)
     # Flatten multi-line text; strip whitespace
     return str(value).strip().replace("\n", " / ").replace("\r", "")
 
